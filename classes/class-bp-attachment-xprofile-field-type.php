@@ -82,7 +82,9 @@ class BP_Attachment_XProfile_Field_Type extends BP_XProfile_Field_Type {
 
 		do_action( bp_get_the_profile_field_errors_action() );
 
+		// The script below is a hack to get around the fact that there's no filter/action to adjust enctype on profile form.
 		?>
+		<script>jQuery( 'form#profile-edit-form' ).attr( 'enctype', 'multipart/form-data' );</script>
 		<input type="hidden" name="action" id="action" value="<?php echo $action; ?>" />
 		<input type="hidden" name="bpaxft_field_id" value="<?php echo bp_get_the_profile_field_id(); ?>" />
 		<input type="file" name="<?php echo $file_input; ?>" id="<?php echo $file_input; ?>" />

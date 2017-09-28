@@ -15,8 +15,6 @@
 define( 'BPAXFT_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'BPAXFT_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
-require_once BPAXFT_PLUGIN_PATH . 'classes/class-bp-attachment-xprofile.php';
-
 /**
  * Register the BP Attachment XProfile field type.
  *
@@ -24,6 +22,7 @@ require_once BPAXFT_PLUGIN_PATH . 'classes/class-bp-attachment-xprofile.php';
  * @return array $field_types
  */
 function bpaxft_filter_xprofile_get_field_types( array $field_types ) {
+	require_once BPAXFT_PLUGIN_PATH . 'classes/class-bp-attachment-xprofile.php';
 	require_once BPAXFT_PLUGIN_PATH . 'classes/class-bp-attachment-xprofile-field-type.php';
 
 	return array_merge(

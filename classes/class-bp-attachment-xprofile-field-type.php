@@ -35,10 +35,11 @@ class BP_Attachment_XProfile_Field_Type extends BP_XProfile_Field_Type {
 		$parsed_url = parse_url( $field_value );
 
 		if ( ! empty( $parsed_url['path'] ) ) {
-			$href = apply_filters( "bpaxft_display_href", $parsed_url['path'], $field_value, $field_id );
-			$text = apply_filters( "bpaxft_display_text", 'View file', $field_value, $field_id );
+			$href = apply_filters( 'bpaxft_display_href', $parsed_url['path'], $field_value, $field_id );
+			$text = apply_filters( 'bpaxft_display_text', 'View file', $field_value, $field_id );
 
-			$retval = apply_filters( "bpaxft_display_html",
+			$retval = apply_filters(
+				'bpaxft_display_html',
 				sprintf(
 					'<a href="%s" target="_blank" rel="nofollow">%s</a>',
 					$href,
@@ -82,9 +83,9 @@ class BP_Attachment_XProfile_Field_Type extends BP_XProfile_Field_Type {
 		do_action( bp_get_the_profile_field_errors_action() );
 
 		?>
-		<input type="hidden" name="action" id="action" value="<?php echo $action ?>" />
-		<input type="hidden" name="bpaxft_field_id" value="<?php echo bp_get_the_profile_field_id() ?>" />
-		<input type="file" name="<?php echo $file_input ?>" id="<?php echo $file_input ?>" />
+		<input type="hidden" name="action" id="action" value="<?php echo $action; ?>" />
+		<input type="hidden" name="bpaxft_field_id" value="<?php echo bp_get_the_profile_field_id(); ?>" />
+		<input type="file" name="<?php echo $file_input; ?>" id="<?php echo $file_input; ?>" />
 		<?php
 	}
 

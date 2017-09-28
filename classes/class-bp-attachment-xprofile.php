@@ -11,17 +11,23 @@
 class BP_Attachment_XProfile extends BP_Attachment {
 
 	/**
-	 * @var string The upload action used when uploading a file, $_POST['action'] must be set.
+	 * The upload action used when uploading a file, $_POST['action'] must be set.
+	 *
+	 * @var string
 	 */
 	const ACTION = 'bp_attachment_xprofile_upload';
 
 	/**
-	 * @var string The name attribute used in the file input.
+	 * The name attribute used in the file input.
+	 *
+	 * @var string
 	 */
 	const FILE_INPUT = 'bp-attachment-xprofile-file';
 
 	/**
-	 * @var string Component's upload base directory.
+	 * Component's upload base directory.
+	 *
+	 * @var string
 	 */
 	const BASE_DIR = 'bp-attachment-xprofile';
 
@@ -29,10 +35,12 @@ class BP_Attachment_XProfile extends BP_Attachment {
 	 * Constuctor.
 	 */
 	public function __construct() {
-		parent::__construct( [
-			'action' => self::ACTION,
-			'file_input' => self::FILE_INPUT,
-			'base_dir' => self::BASE_DIR,
-		] );
+		parent::__construct(
+			[
+				'action' => self::ACTION,
+				'file_input' => self::FILE_INPUT,
+				'base_dir' => self::BASE_DIR,
+			]
+		);
 	}
 }

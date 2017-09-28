@@ -28,7 +28,9 @@ function bpaxft_filter_xprofile_get_field_types( array $field_types ) {
 
 	return array_merge(
 		$field_types,
-		[ 'bp_attachment' => 'BP_Attachment_XProfile_Field_Type' ]
+		[
+			'bp_attachment' => 'BP_Attachment_XProfile_Field_Type',
+		]
 	);
 }
 add_filter( 'bp_xprofile_get_field_types', 'bpaxft_filter_xprofile_get_field_types' );

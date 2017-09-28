@@ -1,4 +1,4 @@
-# BP Attachment Xprofile Field Type
+# BP Attachment XProfile Field Type
 
 [![Build Status](https://travis-ci.org/mlaa/bp-attachment-xprofile-field-type.svg)](https://travis-ci.org/mlaa/bp-attachment-xprofile-field-type)
 

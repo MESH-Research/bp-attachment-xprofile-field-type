@@ -33,20 +33,25 @@ class BP_Attachment_XProfile_Field_Type extends BP_XProfile_Field_Type {
 	 */
 	public static function display_filter( $field_value, $field_id = '' ) {
 		$parsed_url = parse_url( $field_value );
-		$text =
 
-		$href = apply_filters( "bpaxft_display_href", $parsed_url['path'], $field_value, $field_id );
-		$text = apply_filters( "bpaxft_display_text", 'View file', $field_value, $field_id );
+		if ( ! empty( $parsed_url['path'] ) ) {
+			$href = apply_filters( "bpaxft_display_href", $parsed_url['path'], $field_value, $field_id );
+			$text = apply_filters( "bpaxft_display_text", 'View file', $field_value, $field_id );
 
-		return apply_filters( "bpaxft_display_html",
-			sprintf(
-				'<a href="%s" target="_blank" rel="nofollow">%s</a>',
-				$href,
-				$text
-			),
-			$field_value,
-			$field_id
-		);
+			$retval = apply_filters( "bpaxft_display_html",
+				sprintf(
+					'<a href="%s" target="_blank" rel="nofollow">%s</a>',
+					$href,
+					$text
+				),
+				$field_value,
+				$field_id
+			);
+		} else {
+			$retval = false;
+		}
+
+		return $retval;
 	}
 
 	/**
@@ -65,6 +70,14 @@ class BP_Attachment_XProfile_Field_Type extends BP_XProfile_Field_Type {
 			<?php bp_the_profile_field_required_label(); ?>
 		</label>
 		<?php
+
+		$existing_file = bp_get_the_profile_field_value();
+		if ( $existing_file ) {
+			echo sprintf(
+				'<p>Upload a new file to replace the existing one: %s</p>',
+				bp_get_the_profile_field_value()
+			);
+		}
 
 		do_action( bp_get_the_profile_field_errors_action() );
 

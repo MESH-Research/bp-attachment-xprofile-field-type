@@ -58,7 +58,6 @@ function bpaxft_handle_uploaded_file() {
 			);
 
 			// TODO If xprofile_set_field_data() failed, we should handle that here.
-
 			// TODO Can this be more portable? Without this redirect, xprofile_set_field_data() doesn't take.
 			// See https://codex.buddypress.org/plugindev/bp_attachment.
 			bp_core_redirect( $_SERVER['REQUEST_URI'] );

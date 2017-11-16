@@ -60,9 +60,17 @@ function bpaxft_handle_uploaded_file() {
 				bp_core_redirect( $_SERVER['REQUEST_URI'] );
 			}
 		} else if ( isset( $_POST['field_ids'] ) && isset( $_POST['bpaxft_field_id'] ) ) {
+			$field_id = $_POST['bpaxft_field_id'];
+
+			// In case visibility changed, handle that first since we're bypassing xprofile_screen_edit_profile().
+			xprofile_set_field_visibility_level(
+				$field_id,
+				bp_displayed_user_id(),
+				!empty( $_POST['field_' . $field_id . '_visibility'] ) ? $_POST['field_' . $field_id . '_visibility'] : 'public'
+			);
+
 			// Prevent xprofile_screen_edit_profile() from deleting this field, since the file input will be empty.
-			$field_ids = explode( ',', $_POST['field_ids'] );
-			$_POST['field_ids'] = array_diff( $field_ids, (array) $_POST['bpaxft_field_id'] );
+			$_POST['field_ids'] = array_diff( explode( ',', $_POST['field_ids'] ), [ $field_id ] );
 		}
 	}
 }

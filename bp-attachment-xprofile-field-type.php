@@ -38,29 +38,31 @@ add_filter( 'bp_xprofile_get_field_types', 'bpaxft_filter_xprofile_get_field_typ
  * Handle file uploads.
  */
 function bpaxft_handle_uploaded_file() {
-	if (
-		isset( $_POST['action'] ) &&
-		BP_Attachment_XProfile::ACTION === $_POST['action'] &&
-		! empty( $_FILES[ BP_Attachment_XProfile::FILE_INPUT ]['name'] )
-	) {
-		$attachment = new BP_Attachment_XProfile();
-		$file = $attachment->upload( $_FILES );
+	if ( isset( $_POST['action'] ) && BP_Attachment_XProfile::ACTION === $_POST['action'] ) {
+		if ( ! empty( $_FILES[ BP_Attachment_XProfile::FILE_INPUT ]['name'] ) ) {
+			$attachment = new BP_Attachment_XProfile();
+			$file = $attachment->upload( $_FILES );
 
-		if ( ! empty( $file['error'] ) ) {
-			bp_core_add_message( $file['error'], 'error' );
-		} else {
-			// TODO This assumes the profile being edited belongs to the current user.
-			// If e.g. an admin is editing another user's profile, this won't work.
-			$result = xprofile_set_field_data(
-				$_POST['bpaxft_field_id'],
-				get_current_user_id(),
-				$file['url']
-			);
+			if ( ! empty( $file['error'] ) ) {
+				bp_core_add_message( $file['error'], 'error' );
+			} else {
+				// TODO This assumes the profile being edited belongs to the current user.
+				// If e.g. an admin is editing another user's profile, this won't work.
+				$result = xprofile_set_field_data(
+					$_POST['bpaxft_field_id'],
+					get_current_user_id(),
+					$file['url']
+				);
 
-			// TODO If xprofile_set_field_data() failed, we should handle that here.
-			// TODO Can this be more portable? Without this redirect, xprofile_set_field_data() doesn't take.
-			// See https://codex.buddypress.org/plugindev/bp_attachment.
-			bp_core_redirect( $_SERVER['REQUEST_URI'] );
+				// TODO If xprofile_set_field_data() failed, we should handle that here.
+				// TODO Can this be more portable? Without this redirect, xprofile_set_field_data() doesn't take.
+				// See https://codex.buddypress.org/plugindev/bp_attachment.
+				bp_core_redirect( $_SERVER['REQUEST_URI'] );
+			}
+		} else if ( isset( $_POST['field_ids'] ) && isset( $_POST['bpaxft_field_id'] ) ) {
+			// Prevent xprofile_screen_edit_profile() from deleting this field, since the file input will be empty.
+			$field_ids = explode( ',', $_POST['field_ids'] );
+			$_POST['field_ids'] = array_diff( $field_ids, (array) $_POST['bpaxft_field_id'] );
 		}
 	}
 }

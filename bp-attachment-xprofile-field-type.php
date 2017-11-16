@@ -41,7 +41,7 @@ function bpaxft_handle_uploaded_file() {
 	if ( isset( $_POST['action'] ) && BP_Attachment_XProfile::ACTION === $_POST['action'] ) {
 		if ( ! empty( $_FILES[ BP_Attachment_XProfile::FILE_INPUT ]['name'] ) ) {
 			$attachment = new BP_Attachment_XProfile();
-			$file = $attachment->upload( $_FILES );
+			$file       = $attachment->upload( $_FILES );
 
 			if ( ! empty( $file['error'] ) ) {
 				bp_core_add_message( $file['error'], 'error' );

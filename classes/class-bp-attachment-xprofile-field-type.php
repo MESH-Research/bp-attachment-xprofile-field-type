@@ -62,7 +62,7 @@ class BP_Attachment_XProfile_Field_Type extends BP_XProfile_Field_Type {
 	 * @return void
 	 */
 	public function edit_field_html( array $raw_properties = [] ) {
-		$action = esc_attr( BP_Attachment_XProfile::ACTION );
+		$action     = esc_attr( BP_Attachment_XProfile::ACTION );
 		$file_input = esc_attr( BP_Attachment_XProfile::FILE_INPUT );
 
 		?>

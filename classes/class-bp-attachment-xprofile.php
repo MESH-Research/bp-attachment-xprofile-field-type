@@ -37,9 +37,9 @@ class BP_Attachment_XProfile extends BP_Attachment {
 	public function __construct() {
 		parent::__construct(
 			[
-				'action' => self::ACTION,
+				'action'     => self::ACTION,
 				'file_input' => self::FILE_INPUT,
-				'base_dir' => self::BASE_DIR,
+				'base_dir'   => self::BASE_DIR,
 			]
 		);
 	}

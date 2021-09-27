@@ -55,11 +55,10 @@ function bpaxft_handle_uploaded_file() {
 				);
 
 				// TODO If xprofile_set_field_data() failed, we should handle that here.
-				// TODO Can this be more portable? Without this redirect, xprofile_set_field_data() doesn't take.
-				// See https://codex.buddypress.org/plugindev/bp_attachment.
-				bp_core_redirect( $_SERVER['REQUEST_URI'] );
 			}
-		} elseif ( isset( $_POST['field_ids'] ) && isset( $_POST['bpaxft_field_id'] ) ) {
+		}
+		
+		if ( isset( $_POST['field_ids'] ) && isset( $_POST['bpaxft_field_id'] ) ) {
 			$field_id = $_POST['bpaxft_field_id'];
 
 			// In case visibility changed, handle that first since we're bypassing xprofile_screen_edit_profile().
@@ -74,4 +73,4 @@ function bpaxft_handle_uploaded_file() {
 		}
 	}
 }
-add_action( 'init', 'bpaxft_handle_uploaded_file' );
+add_action( 'bp_actions', 'bpaxft_handle_uploaded_file' );

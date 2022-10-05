@@ -12,8 +12,6 @@
  * @package         Bp_Attachment_Xprofile_Field_Type
  */
 
-use function Automattic\Jetpack\Extensions\Eventbrite\get_current_url;
-
 define( 'BPAXFT_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'BPAXFT_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 

@@ -12,6 +12,8 @@
  * @package         Bp_Attachment_Xprofile_Field_Type
  */
 
+use function Automattic\Jetpack\Extensions\Eventbrite\get_current_url;
+
 define( 'BPAXFT_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'BPAXFT_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
@@ -46,6 +48,11 @@ function bpaxft_handle_uploaded_file() {
 			if ( ! empty( $file['error'] ) ) {
 				bp_core_add_message( $file['error'], 'error' );
 			} else {
+				$existing_file_url = BP_XProfile_ProfileData::get_value_byid(
+					$_POST['bpaxft_field_id'],
+					get_current_user_id()
+				);
+			
 				// TODO This assumes the profile being edited belongs to the current user.
 				// If e.g. an admin is editing another user's profile, this won't work.
 				$result = xprofile_set_field_data(
@@ -53,6 +60,15 @@ function bpaxft_handle_uploaded_file() {
 					get_current_user_id(),
 					$file['url']
 				);
+
+				if ( $result && ! empty( $existing_file_url ) ) {
+					$upload_dir_parts = explode( '/', $file['file'] );
+					array_pop( $upload_dir_parts );
+					$upload_dir = trailingslashit( join( '/', $upload_dir_parts ) );
+					$existing_filename = array_pop( explode( '/', $existing_file_url ) );
+					$existing_file_path = $upload_dir . $existing_filename;
+					wp_delete_file( $existing_file_path );
+				}
 
 				// TODO If xprofile_set_field_data() failed, we should handle that here.
 			}
